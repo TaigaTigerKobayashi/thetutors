@@ -21,6 +21,8 @@ if($status==false){
 $val = $stmt->fetch();         //1レコードだけ取得する方法
 //$count = $stmt->fetchColumn(); //SELECT COUNT(*)で使用可能()
 
+$_SESSION["id"]      = $val['id'];
+
 //5. 該当レコードがあればSESSIONに値を代入
 if(password_verify($_POST["lpw"] ,$val["lpw"])){
   //Login成功時

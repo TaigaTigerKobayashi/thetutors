@@ -1,5 +1,3 @@
-#student_listから飛んでくるようにする
-
 <?php
 session_start();
 
