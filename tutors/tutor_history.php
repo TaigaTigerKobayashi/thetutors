@@ -1,3 +1,5 @@
+#student_listから飛んでくるようにする
+
 <?php
 session_start();
 
@@ -9,7 +11,10 @@ sschk();
 $pdo = db_conn();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM tutors_history_table");
+//本当は、student_listでクリックしたid＝＝STUDENT_iDのデータを表示すする（予約されている全ての過去データから、対象者のみ入れる。
+$id =$_GET['id'];
+$sql = "SELECT * FROM tutors_history_table WHERE TUTOR_ID =".$id;
+$stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
 //３．データ表示
@@ -21,7 +26,7 @@ if ($status == false) {
     //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $view .= '<P>';
-        $view .= $result["STUDENT_ID"] . "," . $result["START_DATE"];;
+        $view .= $result["START_DATE"];
         $view .= '　';
         $view .= '</p>';
     }
@@ -49,7 +54,7 @@ if ($status == false) {
 
 <!-- Main[Start] -->
 <div>
-    <h1> ユーザー一覧</h1>
+    <h1> 履歴一覧</h1>
     <div class="container jumbotron"><?php echo $view; ?></div>
 </div>
 <!-- Main[End] -->

@@ -11,8 +11,10 @@ sschk();
 $pdo = db_conn();
 
 //２．データ登録SQL作成
-//student_listでクリックしたidをそのままこのSTUDENT_iDに読み込ませたい
-$stmt = $pdo->prepare("SELECT * FROM tutors_history_table WHERE STUDENT_ID = ***");
+//本当は、student_listでクリックしたid＝＝STUDENT_iDのデータを表示すする（予約されている全ての過去データから、対象者のみ入れる。
+$id =$_GET['id'];
+$sql = "SELECT * FROM tutors_history_table WHERE STUDENT_ID =".$id;
+$stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
 //３．データ表示
@@ -24,10 +26,8 @@ if ($status == false) {
     //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $view .= '<P>';
-        $view .= '<a href="student_history.php?id='.$result["id"].'">';
-        $view .= $result[""] . "," . $result["lid"];;
+        $view .= $result["START_DATE"];
         $view .= '　';
-        $view .= '</a>';
         $view .= '</p>';
     }
 
