@@ -5,6 +5,10 @@ function h($str){
 }
 
 
+
+=======
+
+
 //DB接続
 function db_conn(){
   try {
