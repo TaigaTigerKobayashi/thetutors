@@ -4,6 +4,8 @@ function h($str){
     return htmlspecialchars($str, ENT_QUOTES);
 }
 
+//コメント加えました
+
 //DB接続
 function db_conn(){
   try {
