@@ -24,7 +24,7 @@ if ($status == false) {
     //Selectデータの数だけ自動でループしてくれる
     //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $view .= '<P>';
+        $view .= '<p>';
         $view .= $result["START_DATE"];
         $view .= '　';
         $view .= '</p>';
