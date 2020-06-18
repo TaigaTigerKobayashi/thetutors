@@ -6,7 +6,7 @@ function h($str){
 
 
 
-=======
+
 
 
 //DB接続
