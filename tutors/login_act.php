@@ -31,7 +31,7 @@ if(password_verify($_POST["lpw"] ,$val["lpw"])){
   $_SESSION["name"]      = $val['name'];
   #tutorならtutor.php、studentならstudent.php、adminならmanage.phpに飛ばす
   if ($_SESSION["USER_TYPE"] == 1){
-    header("Location:student.php");
+    header("Location:../fullcalendar2/packages/cal.php");
     exit();
   }if($_SESSION["USER_TYPE"] == 2){
     header("Location:tutor.php");
