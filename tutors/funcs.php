@@ -3,7 +3,7 @@
 function h($str){
     return htmlspecialchars($str, ENT_QUOTES);
 }
-#fafafa
+
 
 //DB接続
 function db_conn(){
