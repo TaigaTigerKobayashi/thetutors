@@ -37,10 +37,10 @@
   </head>
 
   <body class="text-center">
-  <form class="form-signin" method="POST" action="login_act.php">
+  <form class="form-signin" method="POST" action="login_act2.php">
     <h1 class="h3 mb-3 font-weight-normal">ログイン</h1>
-    <label for="inputEmail" class="sr-only">yourname@example.com</label>
-    <input type="email" name="lid" id="inputEmail" class="form-control" placeholder="yourname@example.com" required autofocus>
+    <label for="inputUserID" class="sr-only">ユーザーID</label>
+    <input type="text" name="lid" id="inputUserID" class="form-control" placeholder="ユーザーID" required autofocus>
     <label for="inputPassword" class="sr-only">パスワード</label>
     <input type="password" name="lpw" id="inputPassword" class="form-control" placeholder="パスワード" required>
     <div class="checkbox mb-3">
@@ -60,9 +60,9 @@
   <div class="jumbotron">
    <fieldset>
     <legend>ユーザー登録</legend>
-     <label>名前：<input type="text" name="name"></label><br>
      <label>Login ID：<input type="text" name="lid"></label><br>
      <label>Login PW<input type="text" name="lpw"></label><br>
+     <label>Login Email<input type="text" name="email"></label><br>
      <label>管理FLG：
       ユーザー / チューター <input type="radio" name="USER_TYPE" value="1">　
       管理者<input type="radio" name="USER_TYPE" value="0">
