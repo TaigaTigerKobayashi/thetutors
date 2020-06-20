@@ -5,7 +5,7 @@ include("../../tutors/funcs.php");
 
 $pdo = db_conn();
 
-$stmt = $pdo -> prepare("SELECT * FROM calendar_table WHERE student_id=:id");
+$stmt = $pdo -> prepare("SELECT * FROM calendar_table WHERE tutor_id=:id");
 $stmt->bindValue(':id',$_SESSION["id"], PDO::PARAM_STR);
 $status = $stmt -> execute();
 
@@ -32,7 +32,7 @@ $status = $stmt -> execute();
 <body>
   <div class="container">
   <a href="../../tutors/logout.php"><button type="button" class="btn btn-primary">Logout</button></a>
-  <a href="cal_tutor.php"><button type="button" class="btn btn-success">tutor</button></a>
+  <a href="cal.php"><button type="button" class="btn btn-info">reserve</button></a>
     <div class="row">
       <div class="col"></div>
       <div class="col-7">

@@ -1,5 +1,7 @@
-<?php 
-include("funcs.php");
+<?php
+session_start();
+
+include("../../tutors/funcs.php");
 
 $day = $_POST["day"];
 $title = $_POST["textTitle"];
@@ -7,11 +9,14 @@ $start = $_POST["start"];
 $end = $_POST["end"];
 $text = $_POST["text"];
 $color = $_POST["color"];
+$id = $_SESSION["id"];
+
 
 $pdo = db_conn();
 
-$sql = "INSERT INTO calendar_table(id,title,text,color,day,start,end)VALUES(NULL,:title,:text,:color,:day,:start,:end)";
+$sql = "INSERT INTO calendar_table(id,student_id,title,text,color,day,start,end)VALUES(NULL,:id,:title,:text,:color,:day,:start,:end)";
 $stmt = $pdo-> prepare($sql);
+$stmt -> bindValue(':id',$id,PDO::PARAM_INT);
 $stmt -> bindValue(':title',$title,PDO::PARAM_STR);
 $stmt -> bindValue(':text',$text,PDO::PARAM_STR);
 $stmt -> bindValue(':color',$color,PDO::PARAM_STR);
@@ -24,7 +29,7 @@ if ($status == false) {
     sql_error($stmt);
 } else {
     //５．index.phpへリダイレクト
-    redirect("test.php");
+    redirect("cal.php");
 }
 
 
