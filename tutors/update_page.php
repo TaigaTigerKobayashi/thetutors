@@ -2,7 +2,7 @@
 session_start();
 // $id = $_GET["id"]; //誰がログインしてきたのか→必要ない
 include("funcs.php");
-$pdo = db2_conn();
+$pdo = db_conn();
 
 //２．データ登録SQL作成
 // とにかくこのページに来たら未設定の予約一覧が表示されるようにしたい＝TUTOR==null
