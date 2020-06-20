@@ -1,20 +1,21 @@
-<?php
-//必ずsession_startは最初に記述
+<?php 
+
+
+//1番最初に必ず記述
 session_start();
 
 //SESSIONを初期化（空っぽにする）
 $_SESSION = array();
 
-//Cookieに保存してある"SessionIDの保存期間を過去にして破棄
-if (isset($_COOKIE[session_name()])) { //session_name()は、セッションID名を返す関数
-    setcookie(session_name(), '', time()-42000, '/');
+//Cookieに保存してある'SessionIDの保存期間を過去にして破棄
+if(isset($_COOKIE[session_name()])){//session_name()はセッションIDを返す関数
+  setcookie(session_name(), '', time()-42000,'/');
 }
 
-//サーバ側での、セッションIDの破棄
+//サーバー側での、セッションIDの破棄(セッションのファイルをこの記述で削除している)
 session_destroy();
 
-//処理後、index.phpへリダイレクト
-header("Location: login.php");
-exit();
+//処理後、login.php(初期画面）へリダイレクト（毎回変える必要があるのはこの遷移先のみ。あとはコピペで使う！）
+header('Location: login.php')
 
 ?>

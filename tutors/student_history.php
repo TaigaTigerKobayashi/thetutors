@@ -1,61 +1,70 @@
 <?php
 session_start();
+include('funcs.php');//別の階層にfuncs.phpがある場合は「betukaisou/funcs.php」などパスを変えてincludesする
+// $sid =$_GET['STUDENT'];
+// $tid =$_GET['TUTOR'];
+if(isset($_GET['STUDENT'])){
+  $sid =$_GET['STUDENT'];
+  $pdo = db_conn();
 
-//1.外部ファイル読み込み＆DB接続
-//※htdocsと同じ階層に「includes」を作成してfuncs.phpを入れましょう！
-//include "../../includes/funcs.php";
-include "funcs.php";
-sschk();
+  //２．データ登録SQL作成
+  $stmt = $pdo->prepare("SELECT * FROM calendar_table WHERE STUDENT = '$sid' OR TUTOR = '$sid' ORDER BY id DESC");
+}else if(isset($_GET['TUTOR'])){
+  $tid =$_GET['TUTOR'];
+ //1. DB接続します
 $pdo = db_conn();
 
 //２．データ登録SQL作成
-//本当は、student_listでクリックしたid＝＝STUDENT_iDのデータを表示すする（予約されている全ての過去データから、対象者のみ入れる。
-$id =$_GET['id'];
-$sql = "SELECT * FROM tutors_history_table WHERE STUDENT_ID =".$id;
-$stmt = $pdo->prepare($sql);
+$stmt = $pdo->prepare("SELECT * FROM calendar_table WHERE STUDENT = '$tid' OR TUTOR = '$tid' ORDER BY id DESC");
+}else{
+  echo '何もこなかった';
+}
+// echo $sid;
+// echo $tid;
+
+// //1. DB接続します
+// $pdo = db_conn();
+
+// //２．データ登録SQL作成
+// $stmt = $pdo->prepare("SELECT * FROM calendar_table WHERE STUDENT = '$sid' OR TUTOR = '$sid' ORDER BY id DESC");
 $status = $stmt->execute();
 
-//３．データ表示
-$view = "";
-if ($status == false) {
-    sql_error($stmt);
-} else {
-    //Selectデータの数だけ自動でループしてくれる
-    //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
-    while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $view .= '<P>';
-        $view .= $result["START_DATE"];
-        $view .= '　';
-        $view .= '</p>';
-    }
 
+//3．データ登録処理後（基本コピペ使用でOK)
+$view='';
+if($status==false){
+  //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
+  $error = $stmt->errorInfo();
+  exit("SQLError:".$error[2]);//エラーが起きたらエラーの2番目の配列から取ります。ここは考えず、これを使えばOK
+                             // SQLEErrorの部分はエラー時出てくる文なのでなんでもOK
+}else{
+ //selectデータの数だけ自動でループしてくれる
+ $view='';
+ while( $r = $stmt->fetch(PDO::FETCH_ASSOC)){
+  $view .='<p>';
+  $view .=$r["day"].":".$r["start"]."~".$r["end"].'<br>';
+  $view .='言語 : 「'.$r["title"]."」 概要:".$r["text"].'<br>';
+  $view .='受講生徒は : 「'.$r["STUDENT"]."」 さんです。".'<br>';
+  $view .='担当講師は : 「'.$r["TUTOR"]."」 さんです。".'<br>';
+  $view .='</p>';
+
+ }
 }
 ?>
 
-
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>USER表示</title>
-<link rel="stylesheet" href="css/range.css">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<style>div{padding: 10px;font-size:16px;}</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
 </head>
-<body id="main">
-<!-- Head[Start] -->
-<header>
-</header>
-<!-- Head[End] -->
+<body>
+<?php include('kanriHeader.php'); ?>
+  <h1><?php echo $sid ?> <?php echo $tid ?> さんの予約履歴</h1>
+  <a href="student_list.php">ユーザー一覧へ戻る</a>
 
-<!-- Main[Start] -->
-<div>
-    <h1> 履歴一覧</h1>
-    <div class="container jumbotron"><?php echo $view; ?></div>
-</div>
-<!-- Main[End] -->
-
+ <p><?=$view?></p>
 </body>
 </html>
