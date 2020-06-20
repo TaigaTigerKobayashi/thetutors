@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("funcs.php");
-$pdo = db2_conn();
+$pdo = db_conn();
 
 $sql = "UPDATE calendar_table SET TUTOR = :TUTOR WHERE id = :id";
  
